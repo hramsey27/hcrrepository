@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+
+body { margin:0; padding: 0;}
+#map { position: absolute; top:0; bottom: 0; width: 100%}
+
+</head>
+<body>
+<div id="map"></div>
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
+mapboxgl.accessToken = 'pk.eyJ1IjoiaHJhbXNleTI3IiwiYSI6ImNrejRweHBlNzBhM3EycXBydWtldWg3NmEifQ.4vOCgqtn0IgKsNV_iPj4Dg';
+
+var map = new mapboxgl.Map({
+  container: 'map', // container id
+  style: 'mapbox://styles/hramsey27/ckz4r05ex002115o3pp4zuoz1', // stylesheet location
+  center: [-122.25, 37.87], // starting position
+  zoom: 12 // starting zoom
+});
+
+var geolocate = new mapboxgl.GeolocateControl({
+  positionOptions: {
+    enableHighAccuracy: true
+  },
+  trackUserLocation: true
+});
+
+      
+      map.on('load', function() {
+  map.addSource('points', {
+        type: 'geojson',
+        data: 'https://raw.githubusercontent.com/cwilmott/locativemedia/main/data/campus-icons.geojson'
+      });
+      
+    map.addLayer({
+  id: 'points-layer',
+  type: 'symbol',
+  source: 'points',
+  layout: {
+    'icon-image': 'golf', // more icons here: https://labs.mapbox.com/maki-icons/editor/
+    'icon-allow-overlap': true
+  },
+});
+});
+</body>
+</html>
